@@ -1,7 +1,8 @@
 .card {
   width: 15%;
-  margin: 2% 1%;
-  padding: 1em;
+  height: 30%;
+  margin: 1% 1%;
+  padding: 0.5em;
   border: solid grey;
 }
 
@@ -15,6 +16,8 @@
   flex-wrap: wrap;
   justify-content: flex-start;
   width: 100%;
+  position: relative;
+  z-index: 1;
 };
 
 .navbar {
@@ -42,6 +45,8 @@ nav{
   padding: 1rem 1rem;
   border: solid black;
   font-size: 1.5rem;
+  position: relative;
+  z-index: 1;
 }
 
 .navbar ul{
@@ -61,6 +66,11 @@ nav{
   text-decoration: none;
 }
 
+.characterForm{
+  position: relative;;
+  z-index: 1;
+}
+
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,700");
 body{
   overflow-x: hidden;
@@ -75,6 +85,7 @@ h1{
 .video-container{
   width: 100vw;
   height: 100vh;
+  z-index: -1;
 }
 
  iframe {

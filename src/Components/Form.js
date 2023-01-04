@@ -1,4 +1,11 @@
+import { useState } from "react"
+
 function Form(){
+    const [newCharacter, setNewCharacter] = useState({});
+    const handleChange = () => {
+
+    }
+    //Name, Image, IsFemale, Culture, Titles, Aliases, Born, Died, PlayedBy
     return(
         <div>
             <form className="characterForm">
@@ -18,6 +25,8 @@ function Form(){
                 <input type="text" name="born" onChange={handleChange} value={newCharacter.Born}/>
                 <label for="died">Died</label>
                 <input type="text" name="died" onChange={handleChange} value={newCharacter.Died}/>
+                <label for="playedBy">Played By</label>
+                <input type="text" name="playedBy" onChange={handleChange} value={newCharacter.PlayedBy}/>
             </form>
         </div>
     )
