@@ -23,7 +23,13 @@ function App() {
   }, []);
 
   return (
+    
     <div>
+      
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/s7L2PVdrb_8?&autoplay=1&mute=1&playsinline=1&playlist=s7L2PVdrb_8&loop=1"/>
+      </div>
+      
       <Navbar/>
       <Characters characters={characters}/>
     </div>
