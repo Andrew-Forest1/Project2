@@ -7,12 +7,13 @@ function Form(){
     }
     //Name, Image, IsFemale, Culture, Titles, Aliases, Born, Died, PlayedBy
     return(
-        <div>
+        <div className="formContainer">
+            <h1>Add Character</h1>
             <form className="characterForm">
                 <label for="name">Name</label>
                 <input type="text" name="name" onChange={handleChange} value={newCharacter.Name}/>
                 <label for="image">Image</label>
-                <input type="image" name="image" onChange={handleChange} value={newCharacter.Image}/>
+                <input type="text" name="image" onChange={handleChange} value={newCharacter.Image}/>
                 <label for="sex">Sex</label>
                 <input type="text" name="sex" onChange={handleChange} value={newCharacter.IsFemale}/>
                 <label for="culture">Culture</label>
