@@ -14,6 +14,20 @@
   height: 100%;
 }
 
+.cardBack{
+  height: 100%;
+  text-align: left;
+  overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+.cardBack h1{
+  text-align: center;
+}
+
 .addedCharacter{
   display: contents;
 }
@@ -25,6 +39,7 @@
   margin-left: 25%;
   margin-right: 25%;
   margin-top: 1%;
+  margin-bottom: 2%;
   border: solid;
   display: grid;
 }
@@ -43,7 +58,7 @@
   z-index: 1;
   justify-items: stretch;
   align-content: stretch;
-  height: 85vh;
+  height: 82vh;
   overflow-y: scroll;
 };
 
