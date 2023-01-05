@@ -1,6 +1,8 @@
 import { useState } from "react"
+import Question from "./Question";
 
 function Quiz({characters}) {
+    
     const getRndInteger = (min, max) => {
         return Math.floor(Math.random() * (max - min + 1) ) + min;
     }
@@ -12,11 +14,15 @@ function Quiz({characters}) {
         answer4:"answer4"
     });
 
-    const [character, setCharacter] = useState({...characters[getRndInteger(0,characters.length - 1)]});
+    const [character, setCharacter] = useState({});
 
     const [questionType, setQuestionType] = useState(getRndInteger(1,4));
 
-    const [start, setStart] = useState(false);
+    const [question, setQuestion] = useState("Show question here");
+
+    //const [start, setStart] = useState(false);
+
+    //debugger
 
     const handleChange = () => {
 
@@ -28,12 +34,32 @@ function Quiz({characters}) {
     }
 
     const startQuiz = () => {
-        setCharacter({...characters[getRndInteger(0,characters.length - 1)]})
-        setQuestionType(getRndInteger(1,4))
-        setStart(true)
+        newQuestion()
     }
 
-    const getCorrectAnswer = () => {
+    const newQuestion = () => {
+        const newCharacter = characters[getRndInteger(0,characters.length - 1)]
+        
+        const newQuestionType = getRndInteger(1,4)
+
+        const newQuestionString = newQuestionPhrase(newQuestionType)
+
+        const newAnswer = {
+            answer1: getWrongAnswer(newQuestionType),
+            answer2: getWrongAnswer(newQuestionType),
+            answer3: getWrongAnswer(newQuestionType),
+            answer4: getWrongAnswer(newQuestionType)
+        }
+
+        newAnswer[`answer${getRndInteger(1,4)}`] = getCorrectAnswer(newCharacter, newQuestionType)
+
+        setCharacter(newCharacter)
+        setAnswers(newAnswer)
+        setQuestionType(newQuestionType)
+        setQuestion(newQuestionString)
+    }
+
+    const getCorrectAnswer = (character, questionType) => {
         switch (questionType) {
             case 1:
                 return character.Name
@@ -64,7 +90,38 @@ function Quiz({characters}) {
         }
     }
 
-    const question = () => {
+    const getWrongAnswer = (questionType) => {
+        switch (questionType) {
+            case 1:
+                return characters[getRndInteger(0,characters.length - 1)].Name
+                break;
+            case 2:
+                if(characters[getRndInteger(0,characters.length - 1)].Titles.length===0){
+                    return "Error"
+                }
+                else{
+                    return characters[getRndInteger(0,characters.length - 1)].Titles[getRndInteger(0,characters[getRndInteger(0,characters.length - 1)].Titles.length)]
+                }
+                break;
+            case 3:
+                if(characters[getRndInteger(0,characters.length - 1)].Aliases.length===0){
+                    return "Error"
+                }
+                else{
+                    return characters[getRndInteger(0,characters.length - 1)].Aliases[getRndInteger(0,characters[getRndInteger(0,characters.length - 1)].Aliases.length)]
+                }
+                break;
+                break;
+            case 4:
+                return characters[getRndInteger(0,characters.length - 1)].PlayedBy
+                break;
+            default:
+                return "Error"
+                break;
+        }
+    }
+
+    const newQuestionPhrase = (questionType) => {
         switch (questionType) {
             case 1:
                 return (<p>What is this characters name?</p>)
@@ -86,60 +143,8 @@ function Quiz({characters}) {
 
     return (
         <div className="quizContainer">
-            {start ? (<div>
-                <img src={character.Image} alt={character.Name}/>
-                {question()}
-                <form className="quizForm" onSubmit={handleSubmit}>
-                    <div>
-                        <label>
-                            <input
-                            type="radio"
-                            name="option1"
-                            value="male"
-                            checked={true}
-                            onChange={handleChange}
-                            />
-                            {" "}
-                            {getCorrectAnswer()}
-                        </label>
-                        <label>
-                            <input
-                            type="radio"
-                            name="option2"
-                            value="female"
-                            checked={false}
-                            onChange={handleChange}
-                            />
-                            {" "}
-                            {answers.answer2}
-                        </label>
-                        <label>
-                            <input
-                            type="radio"
-                            name="option3"
-                            value="male"
-                            checked={false}
-                            onChange={handleChange}
-                            />
-                            {" "}
-                            {answers.answer3}
-                        </label>
-                        <label>
-                            <input
-                            type="radio"
-                            name="option4"
-                            value="female"
-                            checked={false}
-                            onChange={handleChange}
-                            />
-                            {" "}
-                            {answers.answer4}
-                        </label>
-                    </div>
-                    <input type="submit" value="Submit"/>
-                </form>
-            </div>) : (<button onClick={startQuiz}>Start</button>)}
-
+            <Question character={character} answers={answers} question={question} />
+            <button onClick={startQuiz}>Submit</button>
         </div>
     )
 }
