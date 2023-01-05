@@ -9,21 +9,27 @@ function Form({setCharacters}){
         Image: "https://upload.wikimedia.org/wikipedia/en/d/da/Olenna_Tyrell-Diana_Rigg.jpg", 
         IsFemale: true, 
         Culture:"", 
-        Titles:["Dowager Lady of Highgarden"], 
-        Aliases:["The Queen of Thorns"], 
+        Titles:"Dowager Lady of Highgarden", 
+        Aliases:"The Queen of Thorns", 
         Born:"In 228 AC, at Arbor",
         Died:"", 
-        PlayedBy:["Diana Rigg"]
+        PlayedBy:"Diana Rigg"
     });
     const [creating, setCreating] = useState(true);
 
     const handleChange = (e) => {
         //cons
         e.target.name==="IsFemale" ? setNewCharacter(current => ({...newCharacter, IsFemale:!current.IsFemale})) : setNewCharacter({...newCharacter, [e.target.name]:e.target.value})
+        console.log()
     }
 
     const handleSubmit = (e) => {
         e.preventDefault()
+
+        //setNewCharacter({...newCharacter, Titles:stringToArray(newCharacter.Titles), Aliases:stringToArray(newCharacter.Aliases)})
+
+        newCharacter.Titles = stringToArray(newCharacter.Titles)
+        newCharacter.Aliases = stringToArray(newCharacter.Aliases)
 
         fetch("http://localhost:3001/characters", {
             method: 'POST',
@@ -39,8 +45,16 @@ function Form({setCharacters}){
           })
     }
 
+    const stringToArray = (str) => {
+        return str.split('\n')
+    }
+
     const addCharacter = (newData) => {
         setCharacters(current => [...current, newData])
+        setCreating(false)
+    }
+
+    const handleClick = () => {
         setNewCharacter({
             Name: "", 
             Image: "", 
@@ -52,7 +66,7 @@ function Form({setCharacters}){
             Died:"", 
             PlayedBy:""
         });
-        setCreating(false)
+        setCreating(true)
     }
 
     //Name, Image, IsFemale, Culture, Titles, Aliases, Born, Died, PlayedBy
@@ -91,9 +105,9 @@ function Form({setCharacters}){
                 <label for="Culture">Culture</label>
                 <input type="text" name="Culture" onChange={handleChange} value={newCharacter.Culture}/>
                 <label for="Titles">Titles</label>
-                <input type="text" name="Titles" onChange={handleChange} value={newCharacter.Titles}/>
+                <textarea name="Titles" rows={3} onChange={handleChange} value={newCharacter.Titles}/>
                 <label for="Aliases">Aliases</label>
-                <textarea name="Aliases" onChange={handleChange} value={newCharacter.Aliases}/>
+                <textarea name="Aliases" rows={3} onChange={handleChange} value={newCharacter.Aliases}/>
                 <label for="Born">Born</label>
                 <input type="text" name="Born" onChange={handleChange} value={newCharacter.Born}/>
                 <label for="Died">Died</label>
@@ -105,7 +119,7 @@ function Form({setCharacters}){
             ) : (
                 <div className="addedCharacter">
                     <Character {...newCharacter}/>
-                    <button onClick={()=>{setCreating(true)}}>Continue</button>
+                    <button onClick={handleClick}>Continue</button>
                 </div>
             )}
         </div>
