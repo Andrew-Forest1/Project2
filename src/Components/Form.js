@@ -1,34 +1,113 @@
 import { useState } from "react"
+import Character from "./Character";
 
-function Form(){
-    const [newCharacter, setNewCharacter] = useState({});
-    const handleChange = () => {
+function Form({setCharacters}){
+    const [newCharacter, setNewCharacter] = useState({
+        //{"Id":784,"Name":"Olenna Redwyne","IsFemale":true,"Culture":"","Titles":["Dowager Lady of Highgarden"],"Aliases":["The Queen of Thorns"],"Born":"In 228 AC, at Arbor","Died":"","Father":null,"Mother":null,"Spouse":664,"Children":[],"Allegiances":[317,398],"Books":[1,2,3,5,8],"PovBooks":[],"PlayedBy":["Diana Rigg"],"TvSeries":["Season 3","Season 4", "Season 6"]},
 
+        Name: "Olenna Redwyne", 
+        Image: "https://upload.wikimedia.org/wikipedia/en/d/da/Olenna_Tyrell-Diana_Rigg.jpg", 
+        IsFemale: true, 
+        Culture:"", 
+        Titles:["Dowager Lady of Highgarden"], 
+        Aliases:["The Queen of Thorns"], 
+        Born:"In 228 AC, at Arbor",
+        Died:"", 
+        PlayedBy:["Diana Rigg"]
+    });
+    const [creating, setCreating] = useState(true);
+
+    const handleChange = (e) => {
+        //cons
+        e.target.name==="IsFemale" ? setNewCharacter(current => ({...newCharacter, IsFemale:!current.IsFemale})) : setNewCharacter({...newCharacter, [e.target.name]:e.target.value})
     }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+
+        fetch("http://localhost:3001/characters", {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body:JSON.stringify(newCharacter)
+        })
+        .then(res => res.json())
+        .then(addCharacter)
+        .catch((error) => {
+            console.log(error)
+          })
+    }
+
+    const addCharacter = (newData) => {
+        setCharacters(current => [...current, newData])
+        setNewCharacter({
+            Name: "", 
+            Image: "", 
+            IsFemale: true, 
+            Culture:"", 
+            Titles:"", 
+            Aliases:"", 
+            Born:"",
+            Died:"", 
+            PlayedBy:""
+        });
+        setCreating(false)
+    }
+
     //Name, Image, IsFemale, Culture, Titles, Aliases, Born, Died, PlayedBy
     return(
         <div className="formContainer">
-            <h1>Add Character</h1>
-            <form className="characterForm">
-                <label for="name">Name</label>
-                <input type="text" name="name" onChange={handleChange} value={newCharacter.Name}/>
-                <label for="image">Image</label>
-                <input type="text" name="image" onChange={handleChange} value={newCharacter.Image}/>
-                <label for="sex">Sex</label>
-                <input type="text" name="sex" onChange={handleChange} value={newCharacter.IsFemale}/>
-                <label for="culture">Culture</label>
-                <input type="text" name="culture" onChange={handleChange} value={newCharacter.Culture}/>
-                <label for="titles">Titles</label>
-                <input type="text" name="titles" onChange={handleChange} value={newCharacter.Titles}/>
-                <label for="aliases">Aliases</label>
-                <input type="text" name="aliases" onChange={handleChange} value={newCharacter.Aliases}/>
-                <label for="born">Born</label>
-                <input type="text" name="born" onChange={handleChange} value={newCharacter.Born}/>
-                <label for="died">Died</label>
-                <input type="text" name="died" onChange={handleChange} value={newCharacter.Died}/>
-                <label for="playedBy">Played By</label>
-                <input type="text" name="playedBy" onChange={handleChange} value={newCharacter.PlayedBy}/>
+            <h1>{creating ? "Add Character" : "Character Added"}</h1>
+            {creating ? (
+                <form className="characterForm" onSubmit={handleSubmit}>
+                <label for="Name">Name</label>
+                <input type="text" name="Name" onChange={handleChange} value={newCharacter.Name}/>
+                <label for="Image">Image</label>
+                <input type="text" name="Image" onChange={handleChange} value={newCharacter.Image}/>
+                <label>Sex</label>
+                <label>
+                    <input
+                    type="radio"
+                    name="IsFemale"
+                    value="male"
+                    checked={!newCharacter.IsFemale}
+                    onChange={handleChange}
+                    />
+                    {" "}
+                    Male
+                </label>
+                <label>
+                    <input
+                    type="radio"
+                    name="IsFemale"
+                    value="female"
+                    checked={newCharacter.IsFemale}
+                    onChange={handleChange}
+                    />
+                    {" "}
+                    Female
+                </label>
+                <label for="Culture">Culture</label>
+                <input type="text" name="Culture" onChange={handleChange} value={newCharacter.Culture}/>
+                <label for="Titles">Titles</label>
+                <input type="text" name="Titles" onChange={handleChange} value={newCharacter.Titles}/>
+                <label for="Aliases">Aliases</label>
+                <textarea name="Aliases" onChange={handleChange} value={newCharacter.Aliases}/>
+                <label for="Born">Born</label>
+                <input type="text" name="Born" onChange={handleChange} value={newCharacter.Born}/>
+                <label for="Died">Died</label>
+                <input type="text" name="Died" onChange={handleChange} value={newCharacter.Died}/>
+                <label for="PlayedBy">Played By</label>
+                <input type="text" name="PlayedBy" onChange={handleChange} value={newCharacter.PlayedBy}/>
+                <input type="submit" value="Create"/>
             </form>
+            ) : (
+                <div className="addedCharacter">
+                    <Character {...newCharacter}/>
+                    <button onClick={()=>{setCreating(true)}}>Continue</button>
+                </div>
+            )}
         </div>
     )
 }
