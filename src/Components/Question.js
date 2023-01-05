@@ -23,11 +23,16 @@ function Question({character, question, answers, correctAnswer, handleSubmit}){
         }
     }
 
+    const handleClick = (e) => {
+        e.preventDefault()
+        handleSubmit()
+    }
+
     return(
         <div className="question">
             <img src={character.Image} alt={character.Name}/>
             {question}
-            <form className="quizForm">
+            <form className="quizForm" onSubmit={handleClick}>
                 <div>
                     <label>
                         <input
@@ -74,6 +79,7 @@ function Question({character, question, answers, correctAnswer, handleSubmit}){
                         {answers.answer4}
                     </label>
                 </div>
+                <input type="submit" value="Submit"/>
             </form>
         </div>
     )

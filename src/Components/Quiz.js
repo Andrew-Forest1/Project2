@@ -30,11 +30,6 @@ function Quiz({characters}) {
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        startQuiz()
-    }
-
-    const startQuiz = () => {
-        newQuestion()
     }
 
     const newQuestion = () => {
@@ -143,8 +138,7 @@ function Quiz({characters}) {
 
     return (
         <div className="quizContainer">
-            <Question character={character} answers={answers} question={question} />
-            <button onClick={startQuiz}>Submit</button>
+            <Question character={character} answers={answers} question={question} handleSubmit={newQuestion}/>
         </div>
     )
 }
