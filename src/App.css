@@ -168,3 +168,10 @@ h1{
     width: 177.78vh;
   }
 }
+
+.quizContainer{
+  z-index: 1;
+  position: relative;
+  width: 50vw;
+  height: 50vh;
+}

@@ -3,10 +3,11 @@ import {useState, useEffect} from 'react'
 import { Routes, Route } from "react-router-dom";
 import Home from './Components/Home'
 import Navbar from './Components/Navbar';
-import Body from './Components/Body'
+import Quiz from './Components/Quiz'
 import Characters from './Components/Characters';
 import Form from './Components/Form';
 import Searchbar from './Components/Searchbar';
+
 
 function App() {
   const [characters, setCharacters] = useState([]);
@@ -65,9 +66,10 @@ function App() {
   return (
     <div className="main">
       <Navbar setPage={setPage}/>
-      <Searchbar searchCharacters={searchCharacters} setSearchCharacters={setSearchCharacters} />
-      <Characters characters={filteredCharacters}/>
+{/*       <Searchbar searchCharacters={searchCharacters} setSearchCharacters={setSearchCharacters} />
+      <Characters characters={filteredCharacters}/> */}
 {/*       {routing()} */}
+      <Quiz characters={characters}/>
       <div class="video-container">
         <iframe src="https://www.youtube.com/embed/s7L2PVdrb_8?&autoplay=1&mute=1&playsinline=1&playlist=s7L2PVdrb_8&loop=1"/>
       </div>
