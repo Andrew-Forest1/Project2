@@ -1,15 +1,17 @@
 import './App.css';
 import {useState, useEffect} from 'react'
 import { Routes, Route } from "react-router-dom";
-import Header from './Components/Header'
+import Home from './Components/Home'
 import Navbar from './Components/Navbar';
 import Body from './Components/Body'
 import Characters from './Components/Characters';
 import Form from './Components/Form';
+import Searchbar from './Components/Searchbar';
 
 function App() {
   const [characters, setCharacters] = useState([]);
   const [page, setPage] = useState("/home")
+  const [searchCharacters, setSearchCharacters] = useState("");
 
   const fetchCharacters = async () => {
     try {
@@ -26,14 +28,46 @@ function App() {
     fetchCharacters()
   }, []);
 
+  const routing = () => {
+    switch (page) {
+      case "/home":
+        return (
+          <Route path="/home">
+            <Home/>
+          </Route>
+        )
+        break;
+
+      case "/characters":
+        return (
+          <Route path="/characters">
+            <Characters characters={characters}/>
+          </Route>
+        ) 
+        break;
+
+        case "/form":
+          return (
+            <Route path="/form">
+              <Form setCharacters={setCharacters}/>
+            </Route>
+          )
+          break;
+    
+      default:
+        return <Route path="/home"/>
+        break;
+    }
+  }
+
+  const filteredCharacters = characters.filter(character => character.Name.toLowerCase().includes(searchCharacters.toLocaleLowerCase()))
+
   return (
     <div className="main">
-      <Navbar/>
-{/*       <Routes>
-        <Route path="/characters" element={}/>
-      </Routes> */}
-{/*       <Characters characters={characters}/> */}
-      <Form setCharacters={setCharacters}/>
+      <Navbar setPage={setPage}/>
+      <Searchbar searchCharacters={searchCharacters} setSearchCharacters={setSearchCharacters} />
+      <Characters characters={filteredCharacters}/>
+{/*       {routing()} */}
       <div class="video-container">
         <iframe src="https://www.youtube.com/embed/s7L2PVdrb_8?&autoplay=1&mute=1&playsinline=1&playlist=s7L2PVdrb_8&loop=1"/>
       </div>
