@@ -11,8 +11,6 @@ function Character({Name, Image, IsFemale, Culture, Titles, Aliases, Born, Died,
         return <li>{aliase}</li>
     })
 
-    console.log(Died)
-
     return(
         <div className="card" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
             {hover ? (<div className="cardBack">

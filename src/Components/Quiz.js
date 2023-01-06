@@ -16,9 +16,17 @@ function Quiz({characters}) {
 
     const [character, setCharacter] = useState({});
 
-    const [questionType, setQuestionType] = useState(getRndInteger(1,4));
+    const [correct, setCorrect] = useState(0);
+
+    const [incorrect, setIncorrect] = useState(0);
 
     const [question, setQuestion] = useState("Show question here");
+
+    const [correctAnswer, setCorrectAnswer] = useState("");
+
+    const [answered, setAnswered] = useState(false);
+
+    const [started, setStarted] = useState(false);
 
     //const [start, setStart] = useState(false);
 
@@ -46,12 +54,17 @@ function Quiz({characters}) {
             answer4: getWrongAnswer(newQuestionType)
         }
 
-        newAnswer[`answer${getRndInteger(1,4)}`] = getCorrectAnswer(newCharacter, newQuestionType)
+        const ca = getCorrectAnswer(newCharacter, newQuestionType)
+        newAnswer[`answer${getRndInteger(1,4)}`] = ca
 
         setCharacter(newCharacter)
         setAnswers(newAnswer)
-        setQuestionType(newQuestionType)
         setQuestion(newQuestionString)
+        setCorrectAnswer(ca)
+
+        if(started){
+            setAnswered(current => !current)
+        }
     }
 
     const getCorrectAnswer = (character, questionType) => {
@@ -137,9 +150,21 @@ function Quiz({characters}) {
         }
     }
 
+    const startQuiz = () => {
+        newQuestion()
+        setStarted(current => !current)
+    }
+
     return (
         <div className="quizContainer">
-            <Question character={character} answers={answers} question={question} handleSubmit={newQuestion}/>
+            {started ? (
+                <Question character={character} answers={answers} correctAnswer={correctAnswer} question={question} handleSubmit={newQuestion} correct={correct} incorrect={incorrect} setCorrect={setCorrect} setIncorrect={setIncorrect} answered={answered} setAnswered={setAnswered}/>
+            ) : (
+                <div className="question" onClick={startQuiz}>
+                    Click to Begin
+                </div>
+            )}
+            
         </div>
     )
 }

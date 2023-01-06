@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-function Question({character, question, answers, correctAnswer, handleSubmit}){
+function Question({character, question, answers, correctAnswer, handleSubmit, correct, incorrect, setCorrect, setIncorrect, answered, setAnswered}){
     const [selected, setSelected] = useState(answers.answer1);
 
     const handleChange = (e) => {
@@ -24,63 +24,101 @@ function Question({character, question, answers, correctAnswer, handleSubmit}){
     }
 
     const handleClick = (e) => {
-        e.preventDefault()
-        handleSubmit()
+        if(answered){
+            handleSubmit()
+        }else{
+            e.preventDefault()
+
+            //debugger
+            let answer = "";
+            if(e.target.option1.checked){
+                answer = answers.answer1
+            }else if(e.target.option2.checked){
+                answer = answers.answer2
+            }else if(e.target.option3.checked){
+                answer = answers.answer3
+            }else if(e.target.option4.checked){
+                answer = answers.answer4
+            }else{
+    
+            }
+    
+            console.log(correctAnswer)
+            console.log(answer)
+    
+            if(answer === correctAnswer){
+                setCorrect(current => current + 1)
+            }
+            else{
+                setIncorrect(current => current + 1)
+            }
+
+            setAnswered(current => !current)
+        }
     }
 
     return(
         <div className="question">
+            <h1>Correct: {correct}  -  Incorrect: {incorrect} </h1>
             <img src={character.Image} alt={character.Name}/>
             {question}
-            <form className="quizForm" onSubmit={handleClick}>
+            {answered ? (
                 <div>
-                    <label>
-                        <input
-                        type="radio"
-                        name="option1"
-                        value="male"
-                        checked={selected===answers.answer1}
-                        onChange={handleChange}
-                        />
-                        {" "}
-                        {answers.answer1}
-                    </label>
-                    <label>
-                        <input
-                        type="radio"
-                        name="option2"
-                        value="female"
-                        checked={selected===answers.answer2}
-                        onChange={handleChange}
-                        />
-                        {" "}
-                        {answers.answer2}
-                    </label>
-                    <label>
-                        <input
-                        type="radio"
-                        name="option3"
-                        value="male"
-                        checked={selected===answers.answer3}
-                        onChange={handleChange}
-                        />
-                        {" "}
-                        {answers.answer3}
-                    </label>
-                    <label>
-                        <input
-                        type="radio"
-                        name="option4"
-                        value="female"
-                        checked={selected===answers.answer4}
-                        onChange={handleChange}
-                        />
-                        {" "}
-                        {answers.answer4}
-                    </label>
+                    <p>Correct Answer: {correctAnswer}</p>
+                    <button onClick={handleClick}>Continue</button>
                 </div>
-                <input type="submit" value="Submit"/>
-            </form>
+            ) : (
+                <form className="quizForm" onSubmit={handleClick}>
+                    <div>
+                        <label>
+                            <input
+                            type="radio"
+                            name="option1"
+                            value="male"
+                            checked={selected===answers.answer1}
+                            onChange={handleChange}
+                            />
+                            {" "}
+                            {answers.answer1}
+                        </label>
+                        <label>
+                            <input
+                            type="radio"
+                            name="option2"
+                            value="female"
+                            checked={selected===answers.answer2}
+                            onChange={handleChange}
+                            />
+                            {" "}
+                            {answers.answer2}
+                        </label>
+                        <label>
+                            <input
+                            type="radio"
+                            name="option3"
+                            value="male"
+                            checked={selected===answers.answer3}
+                            onChange={handleChange}
+                            />
+                            {" "}
+                            {answers.answer3}
+                        </label>
+                        <label>
+                            <input
+                            type="radio"
+                            name="option4"
+                            value="female"
+                            checked={selected===answers.answer4}
+                            onChange={handleChange}
+                            />
+                            {" "}
+                            {answers.answer4}
+                        </label>
+                    </div>
+                    <input type="submit" value="Submit"/>
+                </form>
+            )}
+
         </div>
     )
 }
