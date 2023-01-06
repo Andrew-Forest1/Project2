@@ -71,57 +71,60 @@ function Form({setCharacters}){
 
     //Name, Image, IsFemale, Culture, Titles, Aliases, Born, Died, PlayedBy
     return(
-        <div className="formContainer">
-            <h1>{creating ? "Add Character" : "Character Added"}</h1>
-            {creating ? (
-                <form className="characterForm" onSubmit={handleSubmit}>
-                <label for="Name">Name</label>
-                <input type="text" name="Name" onChange={handleChange} value={newCharacter.Name}/>
-                <label for="Image">Image</label>
-                <input type="text" name="Image" onChange={handleChange} value={newCharacter.Image}/>
-                <label>Sex</label>
-                <label>
-                    <input
-                    type="radio"
-                    name="IsFemale"
-                    value="male"
-                    checked={!newCharacter.IsFemale}
-                    onChange={handleChange}
-                    />
-                    {" "}
-                    Male
-                </label>
-                <label>
-                    <input
-                    type="radio"
-                    name="IsFemale"
-                    value="female"
-                    checked={newCharacter.IsFemale}
-                    onChange={handleChange}
-                    />
-                    {" "}
-                    Female
-                </label>
-                <label for="Culture">Culture</label>
-                <input type="text" name="Culture" onChange={handleChange} value={newCharacter.Culture}/>
-                <label for="Titles">Titles</label>
-                <textarea name="Titles" rows={3} onChange={handleChange} value={newCharacter.Titles}/>
-                <label for="Aliases">Aliases</label>
-                <textarea name="Aliases" rows={3} onChange={handleChange} value={newCharacter.Aliases}/>
-                <label for="Born">Born</label>
-                <input type="text" name="Born" onChange={handleChange} value={newCharacter.Born}/>
-                <label for="Died">Died</label>
-                <input type="text" name="Died" onChange={handleChange} value={newCharacter.Died}/>
-                <label for="PlayedBy">Played By</label>
-                <input type="text" name="PlayedBy" onChange={handleChange} value={newCharacter.PlayedBy}/>
-                <input type="submit" value="Create"/>
-            </form>
-            ) : (
-                <div className="addedCharacter">
-                    <Character {...newCharacter}/>
-                    <button onClick={handleClick}>Continue</button>
-                </div>
-            )}
+        <div className="formContainerHolder">
+            <div className="formContainer">
+                <h1>{creating ? "Add Character" : "Character Added"}</h1>
+                {creating ? (
+                    <form className="characterForm" onSubmit={handleSubmit}>
+                    <label for="Name">Name</label>
+                    <input type="text" name="Name" onChange={handleChange} value={newCharacter.Name}/>
+                    <label for="Image">Image</label>
+                    <input type="text" name="Image" onChange={handleChange} value={newCharacter.Image}/>
+                    <label>Sex</label>
+                    <label>
+                        <input
+                        type="radio"
+                        name="IsFemale"
+                        value="male"
+                        checked={!newCharacter.IsFemale}
+                        onChange={handleChange}
+                        />
+                        {" "}
+                        Male
+                    </label>
+                    <label>
+                        <input
+                        type="radio"
+                        name="IsFemale"
+                        value="female"
+                        checked={newCharacter.IsFemale}
+                        onChange={handleChange}
+                        />
+                        {" "}
+                        Female
+                    </label>
+                    <label for="Culture">Culture</label>
+                    <input type="text" name="Culture" onChange={handleChange} value={newCharacter.Culture}/>
+                    <label for="Titles">Titles</label>
+                    <textarea name="Titles" rows={3} onChange={handleChange} value={newCharacter.Titles}/>
+                    <label for="Aliases">Aliases</label>
+                    <textarea name="Aliases" rows={3} onChange={handleChange} value={newCharacter.Aliases}/>
+                    <label for="Born">Born</label>
+                    <input type="text" name="Born" onChange={handleChange} value={newCharacter.Born}/>
+                    <label for="Died">Died</label>
+                    <input type="text" name="Died" onChange={handleChange} value={newCharacter.Died}/>
+                    <label for="PlayedBy">Played By</label>
+                    <input type="text" name="PlayedBy" onChange={handleChange} value={newCharacter.PlayedBy}/>
+                    <br></br>
+                    <input type="submit" value="Create"/>
+                </form>
+                ) : (
+                    <div className="addedCharacter">
+                        <Character {...newCharacter}/>
+                        <button onClick={handleClick}>Continue</button>
+                    </div>
+                )}
+            </div>
         </div>
     )
 }
