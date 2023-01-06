@@ -127,6 +127,7 @@ nav{
   display: grid;
   position: relative;;
   z-index: 1;
+  width: 90%
 }
 
 @import url("https://fonts.googleapis.com/css?family=Roboto:400,400i,700");

@@ -27,22 +27,25 @@ function Form({setCharacters}){
         e.preventDefault()
 
         //setNewCharacter({...newCharacter, Titles:stringToArray(newCharacter.Titles), Aliases:stringToArray(newCharacter.Aliases)})
+        if(e.target.Name !== "" &&  e.target.Image !== "" && e.target.Titles !== "" && e.target.Aliases !== "" && e.target.PlayedBy !== ""){
+            newCharacter.Titles = stringToArray(newCharacter.Titles)
+            newCharacter.Aliases = stringToArray(newCharacter.Aliases)
+            newCharacter.PlayedBy = stringToArray(newCharacter.PlayedBy)
+    
+            fetch("http://localhost:3001/characters", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body:JSON.stringify(newCharacter)
+            })
+            .then(res => res.json())
+            .then(addCharacter)
+            .catch((error) => {
+                console.log(error)
+              })
+        }
 
-        newCharacter.Titles = stringToArray(newCharacter.Titles)
-        newCharacter.Aliases = stringToArray(newCharacter.Aliases)
-
-        fetch("http://localhost:3001/characters", {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body:JSON.stringify(newCharacter)
-        })
-        .then(res => res.json())
-        .then(addCharacter)
-        .catch((error) => {
-            console.log(error)
-          })
     }
 
     const stringToArray = (str) => {
@@ -114,7 +117,7 @@ function Form({setCharacters}){
                     <label for="Died">Died</label>
                     <input type="text" name="Died" onChange={handleChange} value={newCharacter.Died}/>
                     <label for="PlayedBy">Played By</label>
-                    <input type="text" name="PlayedBy" onChange={handleChange} value={newCharacter.PlayedBy}/>
+                    <textarea rows={2} name="PlayedBy" onChange={handleChange} value={newCharacter.PlayedBy}/>
                     <br></br>
                     <input type="submit" value="Create"/>
                 </form>
