@@ -69,7 +69,12 @@ function App() {
 {/*       <Searchbar searchCharacters={searchCharacters} setSearchCharacters={setSearchCharacters} />
       <Characters characters={filteredCharacters}/> */}
 {/*       {routing()} */}
-      <Quiz characters={characters}/>
+      <Routes>
+        <Route path="/characters" element={<Characters characters={filteredCharacters}/>}/>
+        <Route path="/quiz" element={<Quiz characters={characters}/>}/>
+        <Route path="/add" element={<Form setCharacters={setCharacters}/>}/>
+      </Routes>
+{/*       <Quiz characters={characters}/> */}
       <div class="video-container">
         <iframe src="https://www.youtube.com/embed/s7L2PVdrb_8?&autoplay=1&mute=1&playsinline=1&playlist=s7L2PVdrb_8&loop=1"/>
       </div>
