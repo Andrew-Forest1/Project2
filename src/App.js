@@ -70,9 +70,11 @@ function App() {
       <Characters characters={filteredCharacters}/> */}
 {/*       {routing()} */}
       <Routes>
-        <Route path="/characters" element={<Characters characters={filteredCharacters}/>}/>
+        <Route path="/characters" element={<><Searchbar searchCharacters={searchCharacters} setSearchCharacters={setSearchCharacters} /><Characters characters={filteredCharacters}/></>}/>
         <Route path="/quiz" element={<Quiz characters={characters}/>}/>
         <Route path="/add" element={<Form setCharacters={setCharacters}/>}/>
+        <Route path="/home" element={<Home/>}/>
+        <Route path="*" element={<Home/>}/>
       </Routes>
 {/*       <Quiz characters={characters}/> */}
       <div class="video-container">

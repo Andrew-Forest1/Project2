@@ -60,24 +60,23 @@ function Quiz({characters}) {
                 return character.Name
                 break;
             case 2:
-                if(character.Titles.length===0){
-                    return "Error"
+                if(character.Titles.length===0 ){
+                    return getCorrectAnswer(character, questionType)
                 }
                 else{
-                    return character.Titles[getRndInteger(0,character.Titles.length)]
+                    return character.Titles[getRndInteger(0,character.Titles.length - 1)]
                 }
                 break;
             case 3:
                 if(character.Aliases.length===0){
-                    return "Error"
+                    return getCorrectAnswer(character, questionType)
                 }
                 else{
-                    return character.Aliases[getRndInteger(0,character.Aliases.length)]
+                    return character.Aliases[getRndInteger(0,character.Aliases.length - 1)]
                 }
                 break;
-                break;
             case 4:
-                return character.PlayedBy
+                return character.PlayedBy[0]
                 break;
             default:
                 return "Error"
@@ -86,29 +85,31 @@ function Quiz({characters}) {
     }
 
     const getWrongAnswer = (questionType) => {
+        const ranNum = getRndInteger(0,characters.length - 1)
+
         switch (questionType) {
             case 1:
-                return characters[getRndInteger(0,characters.length - 1)].Name
+                return characters[ranNum].Name
                 break;
             case 2:
-                if(characters[getRndInteger(0,characters.length - 1)].Titles.length===0){
-                    return "Error"
+                if(characters[ranNum].Titles.length===0 || characters[ranNum].Titles[0]===""){
+                    return getWrongAnswer(questionType)
                 }
                 else{
-                    return characters[getRndInteger(0,characters.length - 1)].Titles[getRndInteger(0,characters[getRndInteger(0,characters.length - 1)].Titles.length)]
+                    return characters[ranNum].Titles[getRndInteger(0,characters[ranNum].Titles.length - 1)]
                 }
                 break;
             case 3:
-                if(characters[getRndInteger(0,characters.length - 1)].Aliases.length===0){
-                    return "Error"
+                if(characters[ranNum].Aliases.length===0 || characters[ranNum].Aliases[0]===""){
+                    return getWrongAnswer(questionType)
                 }
                 else{
-                    return characters[getRndInteger(0,characters.length - 1)].Aliases[getRndInteger(0,characters[getRndInteger(0,characters.length - 1)].Aliases.length)]
+                    return characters[ranNum].Aliases[getRndInteger(0,characters[ranNum].Aliases.length - 1)]
                 }
                 break;
                 break;
             case 4:
-                return characters[getRndInteger(0,characters.length - 1)].PlayedBy
+                return characters[ranNum].PlayedBy[0]
                 break;
             default:
                 return "Error"
@@ -128,7 +129,7 @@ function Quiz({characters}) {
                 return (<p>What nicknames/aliases belongs to this character?</p>)
                 break;
             case 4:
-                return (<p>What actor is this character played by?</p>)
+                return (<p>What actor/actress is this character played by?</p>)
                 break;
             default:
                 return (<p>Error</p>)
