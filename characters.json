@@ -306,7 +306,9 @@
       "Titles": [
         "Princess"
       ],
-      "Aliases": ["Mother of Dragons"],
+      "Aliases": [
+        "Mother of Dragons"
+      ],
       "Born": "In 172 AC",
       "Died": "",
       "Father": null,
@@ -1274,6 +1276,24 @@
         "Season 2",
         "Season 3"
       ]
+    },
+    {
+      "Name": "Olenna Redwyne",
+      "Image": "https://upload.wikimedia.org/wikipedia/en/d/da/Olenna_Tyrell-Diana_Rigg.jpg",
+      "IsFemale": true,
+      "Culture": "",
+      "Titles": [
+        "Dowager Lady of Highgarden"
+      ],
+      "Aliases": [
+        "The Queen of Thorns"
+      ],
+      "Born": "In 228 AC, at Arbor",
+      "Died": "",
+      "PlayedBy": [
+        "Diana Rigg"
+      ],
+      "id": 31
     }
   ]
 }

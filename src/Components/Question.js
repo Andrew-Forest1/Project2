@@ -74,7 +74,6 @@ function Question({character, question, answers, correctAnswer, handleSubmit, co
                             <input
                             type="radio"
                             name="option1"
-                            value="male"
                             checked={selected===answers.answer1}
                             onChange={handleChange}
                             />
@@ -85,7 +84,6 @@ function Question({character, question, answers, correctAnswer, handleSubmit, co
                             <input
                             type="radio"
                             name="option2"
-                            value="female"
                             checked={selected===answers.answer2}
                             onChange={handleChange}
                             />
@@ -96,7 +94,6 @@ function Question({character, question, answers, correctAnswer, handleSubmit, co
                             <input
                             type="radio"
                             name="option3"
-                            value="male"
                             checked={selected===answers.answer3}
                             onChange={handleChange}
                             />
@@ -107,7 +104,6 @@ function Question({character, question, answers, correctAnswer, handleSubmit, co
                             <input
                             type="radio"
                             name="option4"
-                            value="female"
                             checked={selected===answers.answer4}
                             onChange={handleChange}
                             />
